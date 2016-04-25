@@ -7,18 +7,21 @@
 #include "gen_keys.h"
 #include "rsa_types.h"
 
-typedef enum {
+typedef enum 
+{
     not_prime = 0,
     maybe_prime = 1,
     definitely_prime = 2
 } PrimeProbability;
 
-void set_seed (mpz_t seed) { 
+void set_seed (mpz_t seed) 
+{ 
     uint64_t rand_num = get_random_number();
     mpz_set_ui(seed, rand_num);
 }
 
-void generate_prime(mpz_t dest) {
+void generate_prime(mpz_t dest) 
+{
     mpz_t seed;
     gmp_randstate_t rstate;    
     PrimeProbability is_prime = not_prime;
@@ -29,8 +32,7 @@ void generate_prime(mpz_t dest) {
     gmp_randinit_default (rstate);
     gmp_randseed(rstate, seed);
 
-    while(is_prime == not_prime) // definitely prime is too slow  
-    {
+    while(is_prime == not_prime) {// definitely prime is too slow  
             mpz_urandomb(dest, rstate, KEY_SIZE);          
             is_prime = mpz_probab_prime_p(dest, reps);
     }
@@ -39,7 +41,8 @@ void generate_prime(mpz_t dest) {
     gmp_randclear(rstate);
 }
 
-void get_e(mpz_t e, const mpz_t max) {
+void get_e(mpz_t e, const mpz_t max)
+{
     mpz_t seed, gcd; //gdc - greatest common divider
     gmp_randstate_t rstate; 
     PrimeProbability is_prime = not_prime;
@@ -60,7 +63,8 @@ void get_e(mpz_t e, const mpz_t max) {
     gmp_randclear(rstate);
 }
 
-void generate_keys(RsaKeys_t* rsa_keys) {
+void generate_keys(RsaKeys_t *rsa_keys) 
+{
     mpz_t p, q, totient;
     
     mpz_inits(p, q, totient, NULL);
@@ -76,12 +80,14 @@ void generate_keys(RsaKeys_t* rsa_keys) {
     mpz_clears(p, q, totient, NULL);
 }
 
-void init_keys(RsaKeys_t* rsa_keys) {
+void init_keys(RsaKeys_t *rsa_keys) 
+{
     mpz_init(rsa_keys->public_n);
     mpz_init(rsa_keys->private_d);
     mpz_init(rsa_keys->public_e);
 }
 
-void clear_keys(RsaKeys_t* rsa_keys) {
+void clear_keys(RsaKeys_t *rsa_keys) 
+{
     mpz_clears(rsa_keys->public_e, rsa_keys->public_n, rsa_keys->private_d, NULL);
 }

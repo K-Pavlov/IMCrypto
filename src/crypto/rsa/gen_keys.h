@@ -21,9 +21,9 @@ extern "C" {
 #include <gmp.h>  
 #define KEY_SIZE 4096
     #include "rsa_types.h"
-    void generate_keys(RsaKeys_t* rsa_keys);
-    void init_keys(RsaKeys_t* rsa_keys);
-    void clear_keys(RsaKeys_t* rsa_keys);
+    void generate_keys(RsaKeys_t *rsa_keys);
+    void init_keys(RsaKeys_t *rsa_keys);
+    void clear_keys(RsaKeys_t *rsa_keys);
 
 #ifdef __cplusplus
 }

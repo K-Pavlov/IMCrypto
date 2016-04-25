@@ -25,11 +25,11 @@ int main ()
     rsa_keys_init(&rsa_keys);
     //mpz_inits(rsa_keys.public_e, rsa_keys.public_n, rsa_keys.private_d, NULL);
     if(file_exist("keys.bin")) {
-        FILE* fp = fopen("keys.bin", "rb");
+        FILE *fp = fopen("keys.bin", "rb");
         rsa_read_keys_from_file(&rsa_keys, fp);
         fclose(fp);
     } else {
-        FILE* fp = fopen("keys.bin", "wb");
+        FILE *fp = fopen("keys.bin", "wb");
         rsa_generate_keys(&rsa_keys);
         rsa_write_keys_to_file(rsa_keys, fp);
         fclose(fp);
