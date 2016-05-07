@@ -7,5 +7,5 @@ nbactions.xml
 .nb-gradle/
 keys.bin
 .dep.inc
-/logs/
 /nbproject/
+/logs/
