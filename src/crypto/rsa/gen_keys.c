@@ -1,8 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <gmp.h> 
 #include <stdint.h>
+#include <gmp.h> 
+
 #include "../utilities.h"
 #include "gen_keys.h"
 #include "rsa_types.h"
@@ -65,11 +66,11 @@ void get_e(mpz_t e, const mpz_t max)
 
 void generate_keys(RsaKeys_t *rsa_keys) 
 {
-    mpz_t p, q, totient;
-    
+    mpz_t p, q, totient;    
     mpz_inits(p, q, totient, NULL);
     generate_prime(p);
     generate_prime(q);
+    
     mpz_mul(rsa_keys->public_n, p, q);
     mpz_sub_ui(p, p, 1);
     mpz_sub_ui(q, q, 1);

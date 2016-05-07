@@ -8,9 +8,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <gmp.h>
+
 #include "gen_keys.h"
 #include "encrypt_decrypt.h"
 #include "rsa_types.h"
+#include "../../helpers/memory.h"
+#include "../../helpers/folders.h"
 #define BASE 10
 
 void read_key_from_file(mpz_t number, FILE *fp);
@@ -44,10 +47,7 @@ void write_key_to_file(mpz_t number, FILE *fp)
     int size = mpz_sizeinbase(number, 10);
     
     fwrite(&size, sizeof(size), 1, fp);
-    buffer = calloc(size, sizeof(char));
-    if(buffer == NULL) {
-        // handle 
-    }
+    buffer = im_calloc(size, sizeof(char));
     
     gmp_sprintf(buffer, "%Zd", number);
     fwrite(buffer, sizeof(char), size, fp);
@@ -67,10 +67,7 @@ void read_key_from_file(mpz_t number, FILE *fp)
     char *buffer;
     
     fread(&length, sizeof(length), 1, fp);
-    buffer = calloc(length + 1, sizeof(char));
-    if(buffer == NULL) {
-        // handle 
-    }
+    buffer = im_calloc(length + 1, sizeof(char));
     
     fread(buffer, sizeof(char), length, fp);
     mpz_set_str(number, buffer, BASE);
@@ -80,6 +77,19 @@ void read_key_from_file(mpz_t number, FILE *fp)
 void rsa_keys_init(RsaKeys_t *rsa_keys) 
 {
     init_keys(rsa_keys);
+}
+
+void rsa_get_keys(RsaKeys_t *rsa_keys) {
+    if(file_exist("keys.bin")) {
+        FILE *fp = fopen("keys.bin", "rb");
+        rsa_read_keys_from_file(rsa_keys, fp);
+        fclose(fp);
+    } else {
+        FILE *fp = fopen("keys.bin", "wb");
+        rsa_generate_keys(rsa_keys);
+        rsa_write_keys_to_file(*rsa_keys, fp);
+        fclose(fp);
+    }
 }
 
 void rsa_keys_clear(RsaKeys_t *rsa_keys) 
