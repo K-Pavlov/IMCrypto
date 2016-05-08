@@ -20,8 +20,8 @@ extern "C" {
     void rsa_decrypt(mpz_t decrypted, const mpz_t encrypted, RsaKeys_t rsa_keys);
     void rsa_generate_keys(RsaKeys_t *rsaKeys);
     void rsa_get_keys(RsaKeys_t *rsa_keys);
-    void rsa_keys_init(RsaKeys_t *rsa_keys);
     void rsa_keys_clear(RsaKeys_t *rsa_keys);
+    RsaKeys_t* rsa_keys_init();
 
 #ifdef __cplusplus
 }

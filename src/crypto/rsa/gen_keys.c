@@ -7,7 +7,7 @@
 #include "../utilities.h"
 #include "gen_keys.h"
 #include "rsa_types.h"
-
+#include "../../helpers/memory.h"
 typedef enum 
 {
     not_prime = 0,
@@ -81,14 +81,15 @@ void generate_keys(RsaKeys_t *rsa_keys)
     mpz_clears(p, q, totient, NULL);
 }
 
-void init_keys(RsaKeys_t *rsa_keys) 
+RsaKeys_t* init_keys() 
 {
-    mpz_init(rsa_keys->public_n);
-    mpz_init(rsa_keys->private_d);
-    mpz_init(rsa_keys->public_e);
+    RsaKeys_t *rsa_keys = im_calloc(1, sizeof(RsaKeys_t));
+    mpz_inits(rsa_keys->public_n, rsa_keys->private_d, rsa_keys->public_e, NULL);
+    return rsa_keys;
 }
 
 void clear_keys(RsaKeys_t *rsa_keys) 
 {
     mpz_clears(rsa_keys->public_e, rsa_keys->public_n, rsa_keys->private_d, NULL);
+    free(rsa_keys);
 }

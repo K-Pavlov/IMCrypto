@@ -74,9 +74,9 @@ void read_key_from_file(mpz_t number, FILE *fp)
     free(buffer);
 }
 
-void rsa_keys_init(RsaKeys_t *rsa_keys) 
+RsaKeys_t* rsa_keys_init() 
 {
-    init_keys(rsa_keys);
+    return init_keys();
 }
 
 void rsa_get_keys(RsaKeys_t *rsa_keys) {
