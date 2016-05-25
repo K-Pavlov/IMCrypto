@@ -14,7 +14,8 @@
 #include "rsa_types.h"
 #include "../../helpers/memory.h"
 #include "../../helpers/folders.h"
-#define BASE 10
+#include "rsa.h"
+#include "../utilities.h"
 
 void read_key_from_file(mpz_t number, FILE *fp);
 void write_key_to_file(mpz_t number, FILE *fp);
@@ -44,7 +45,7 @@ void rsa_write_keys_to_file(RsaKeys_t rsa_keys, FILE *fp)
 void write_key_to_file(mpz_t number, FILE *fp) 
 {
     char *buffer;
-    int size = mpz_sizeinbase(number, 10);
+    int size = mpz_sizeinbase(number, BASE);
     
     fwrite(&size, sizeof(size), 1, fp);
     buffer = im_calloc(size, sizeof(char));
@@ -79,7 +80,7 @@ RsaKeys_t* rsa_keys_init()
     return init_keys();
 }
 
-void rsa_get_keys(RsaKeys_t *rsa_keys) {
+void rsa_keys_get(RsaKeys_t *rsa_keys) {
     if(file_exist("keys.bin")) {
         FILE *fp = fopen("keys.bin", "rb");
         rsa_read_keys_from_file(rsa_keys, fp);

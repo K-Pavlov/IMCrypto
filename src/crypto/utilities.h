@@ -22,9 +22,18 @@ extern "C" {
 #include <stdint.h>
 #include <gmp.h>
 #include "rsa/gen_keys.h"
-    
-    uint64_t get_random_number();
+#define BASE 10
+    typedef enum 
+    {
+        not_prime = 0,
+        maybe_prime = 1,
+        definitely_prime = 2
+    } PrimeProbability;
 
+    uint64_t get_random_number();
+    void generate_prime(mpz_t dest, const int key_size);
+    void set_seed (mpz_t seed);
+    
 #ifdef __cplusplus
 }
 #endif

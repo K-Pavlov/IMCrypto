@@ -15,11 +15,12 @@ extern "C" {
 #include <gmp.h>
 #include <stdio.h>
 #include "rsa_types.h"
+#define RSA_BASE 10
     
     void rsa_encrypt(mpz_t encrypted, const mpz_t message, RsaKeys_t rsa_keys);
     void rsa_decrypt(mpz_t decrypted, const mpz_t encrypted, RsaKeys_t rsa_keys);
     void rsa_generate_keys(RsaKeys_t *rsaKeys);
-    void rsa_get_keys(RsaKeys_t *rsa_keys);
+    void rsa_keys_get(RsaKeys_t *rsa_keys);
     void rsa_keys_clear(RsaKeys_t *rsa_keys);
     RsaKeys_t* rsa_keys_init();
 
